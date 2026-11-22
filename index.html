@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator — Free QR Codes, Made Offline in Your Browser</title>
+  <meta name="description" content="Generate QR codes for any text or URL, instantly and offline. Type, watch the code appear live, and download it as a PNG. No sign-up, no tracking, no server — the encoder runs entirely in your browser." />
+  <meta name="keywords" content="qr code generator, free qr code, qr code maker, qr png download, offline qr" />
+  <meta name="author" content="QR Code Generator" />
+  <meta name="theme-color" content="#14100c" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="QR Code Generator — Free QR Codes, Made Offline in Your Browser" />
+  <meta property="og:description" content="Type any text or URL and get a scannable QR code instantly — rendered locally, downloadable as PNG." />
+  <meta property="og:site_name" content="QR Code Generator" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="QR Code Generator — Free QR Codes, Made Offline in Your Browser" />
+  <meta name="twitter:description" content="Type any text or URL and get a scannable QR code instantly — rendered locally, downloadable as PNG." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============ Header ============ -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top" aria-label="QR Code Generator — home">
+        <span class="logo-mark" aria-hidden="true">🔲</span>
+        QR Code <em>Generator</em>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#tool">Generator</a>
+        <a href="#how">How it works</a>
+      </nav>
+      <a class="nav-cta" href="#tool">Make a QR code 📷</a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+    </div>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <a href="#tool">Generator</a>
+      <a href="#how">How it works</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ Hero ============ -->
+    <section class="hero">
+      <div class="container hero-narrow">
+        <span class="eyebrow">Free · No sign-up · Works offline</span>
+        <h1>QR codes,<br /><span class="grad">made right here.</span></h1>
+        <p class="hero-sub">Type any text or link and watch the code appear <strong>instantly</strong> — encoded by a real QR engine that runs entirely in your browser. No server, no tracking, no watermark.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#tool">📷 Create a QR code</a>
+          <a class="btn btn-ghost" href="#how">How it works</a>
+        </div>
+        <p class="hero-note">Live preview · PNG download · Error correction built in</p>
+      </div>
+    </section>
+
+    <!-- ============ Tool ============ -->
+    <section class="section" id="tool">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">The tool</span>
+          <h2>Type it. Scan it.</h2>
+          <p>The code updates live as you type, and grows automatically to fit longer text (up to 213 bytes).</p>
+        </div>
+
+        <div class="tool-card reveal">
+          <div class="qr-layout">
+            <div>
+              <label class="field-label" for="qr-text">Text or URL</label>
+              <textarea class="text-input" id="qr-text" rows="4" placeholder="Type text or paste a URL… e.g. https://example.com" style="resize: vertical;">https://example.com</textarea>
+              <p class="char-count" id="char-count" aria-live="polite"></p>
+
+              <div class="preset-examples">
+                <button class="chip-btn" type="button" data-example="https://example.com">🌐 Website</button>
+                <button class="chip-btn" type="button" data-example="https://maps.google.com/?q=Paris">📍 Location</button>
+                <button class="chip-btn" type="button" data-example="WIFI:T:WPA;S:MyWiFi;P:secret123;;">📶 Wi-Fi</button>
+                <button class="chip-btn" type="button" data-example="Hello from the QR generator!">💬 Message</button>
+              </div>
+
+              <span class="field-label" id="size-label">PNG size</span>
+              <div class="size-row" role="group" aria-labelledby="size-label">
+                <button class="chip-btn" type="button" id="size-small" aria-pressed="false">256 px</button>
+                <button class="chip-btn active" type="button" id="size-medium" aria-pressed="true">512 px</button>
+                <button class="chip-btn" type="button" id="size-large" aria-pressed="false">1024 px</button>
+              </div>
+
+              <div class="action-row">
+                <button class="btn btn-primary" id="download-btn" type="button">⬇️ Download PNG</button>
+                <button class="btn btn-ghost" id="copy-btn" type="button">📋 Copy text</button>
+              </div>
+            </div>
+
+            <div>
+              <span class="field-label" style="margin-top:0;">Live preview</span>
+              <div class="qr-preview" id="qr-preview">
+                <canvas id="qr-canvas" width="512" height="512" role="img" aria-label="Generated QR code"></canvas>
+                <p class="qr-empty hidden" id="qr-empty">Your QR code will appear here…</p>
+              </div>
+              <div class="qr-meta" aria-live="polite">
+                <span class="chip-btn" id="meta-version">—</span>
+                <span class="chip-btn" id="meta-modules">—</span>
+                <span class="chip-btn" id="meta-ec">EC level M · ~15% damage-proof</span>
+                <span class="chip-btn hidden" id="meta-size">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ How it works ============ -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Dead simple</span>
+          <h2>How it works.</h2>
+          <p>Three steps between you and a scannable code.</p>
+        </div>
+        <div class="steps-grid reveal">
+          <div class="step-card">
+            <span class="step-num">1</span>
+            <h3>Type or paste</h3>
+            <p>A link, a message, a Wi-Fi login — anything up to 213 bytes. The code draws itself as you type.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">2</span>
+            <h3>Pick a size</h3>
+            <p>256 px for screens, 512 px for most printing, 1024 px for posters and flyers. Bigger is always sharper.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">3</span>
+            <h3>Download the PNG</h3>
+            <p>One click saves a clean PNG with a proper quiet zone, ready to print or share. Test it with your phone camera.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ Footer ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <a class="logo" href="#top" aria-label="QR Code Generator — back to top">
+            <span class="logo-mark" aria-hidden="true">🔲</span>
+            QR Code <em>Generator</em>
+          </a>
+          <p>Free QR codes generated entirely in your browser — no server, no tracking, no watermark. Works offline.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="#tool">Generator</a>
+          <a href="#how">How it works</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> QR Code Generator. Point, scan, done. 📷</span>
+        <span>Encoded locally · Error correction M</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/qrcode.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
